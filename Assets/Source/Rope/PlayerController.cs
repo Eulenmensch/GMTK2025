@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Source.Rope
 {
-    public class PlayerRopeController : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float linearSpeed;
         [SerializeField] private float maxAngularVelocity;
