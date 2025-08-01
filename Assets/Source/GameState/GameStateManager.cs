@@ -13,6 +13,7 @@ namespace Source.GameState
         
         [SerializeField] private IntroCinematic introCinematic;
         [SerializeField] private LevelSelection levelSelection;
+        [SerializeField] private GameplayState gameplayState;
 
         public void TransitionToState(EGameState state)
         {
@@ -30,6 +31,7 @@ namespace Source.GameState
                     levelSelection.OpenLevelSelection();
                     break;
                 case EGameState.Gameplay:
+                    gameplayState.StartLevel();
                     break;
                 case EGameState.Replay:
                     break;
