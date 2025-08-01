@@ -1,17 +1,47 @@
-﻿using Unity.Cinemachine;
+﻿using System.Collections;
+using Obi;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Source.GameState
 {
     public class Replay : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private CinemachineCamera gameplayCam;
         [SerializeField] private CinemachineCamera replayCam;
+        [SerializeField] private Material replayMat;
+        
+        [Header("Settings")]
+        [SerializeField] private float replayDuration = 3f;
+        
+        private float currentReplayDuration;
         
         public void StartReplay()
         {
+            StartCoroutine(ReplayCoroutine());
+        }
+
+        private IEnumerator ReplayCoroutine()
+        {
+            ObiRopeExtrudedRenderer ropeRenderer = FindFirstObjectByType<ObiRopeExtrudedRenderer>();
+            if (ropeRenderer != null)
+            {
+                ropeRenderer.material = replayMat;
+                ropeRenderer.normalizeV = true;
+            }
             gameplayCam.gameObject.SetActive(false);
             replayCam.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            
+            currentReplayDuration = 0;
+            while (replayDuration > currentReplayDuration)
+            {
+                // Set shader variable
+                yield return null;
+                currentReplayDuration += Time.deltaTime;
+            }
+            // go to evaluation
         }
     }
 }

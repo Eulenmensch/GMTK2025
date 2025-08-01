@@ -1637,6 +1637,7 @@ MonoBehaviour:
   introCinematic: {fileID: 5566091457937183825}
   levelSelection: {fileID: 2202941709867707840}
   gameplayState: {fileID: 270615681994557914}
+  replay: {fileID: 6138996324919555016}
 --- !u!1 &5323150380209484365
 GameObject:
   m_ObjectHideFlags: 0
@@ -3929,6 +3930,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameplayCam: {fileID: 614749792017982230}
   replayCam: {fileID: 5773924674335903155}
+  replayMat: {fileID: 0}
+  replayDuration: 3
 --- !u!1 &8534224287160555277
 GameObject:
   m_ObjectHideFlags: 0

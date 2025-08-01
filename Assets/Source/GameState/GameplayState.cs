@@ -38,9 +38,10 @@ namespace Source.GameState
             
             IsPlaying = true;
 
+            _currentLevelDuration = 0;
             while (_currentLevelDuration < levelDuration)
             {
-                countDownSlider.value = (1f - _currentLevelDuration) / levelDuration;
+                countDownSlider.value = (levelDuration - _currentLevelDuration) / levelDuration;
                 yield return null;
                 _currentLevelDuration += Time.deltaTime;
             }
