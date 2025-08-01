@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using Source.Utils;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 namespace Source.GameState
 {
@@ -10,8 +13,8 @@ namespace Source.GameState
         
         [SerializeField] private IntroCinematic introCinematic;
         [SerializeField] private LevelSelection levelSelection;
-        [SerializeField] private GameplayState gameplayState;
         [SerializeField] private Replay replay;
+        [field: SerializeField] public GameplayState GameplayState { get; private set; }
 
         public void TransitionToState(EGameState state)
         {
@@ -29,7 +32,7 @@ namespace Source.GameState
                     levelSelection.OpenLevelSelection();
                     break;
                 case EGameState.Gameplay:
-                    gameplayState.StartLevel();
+                    GameplayState.StartLevel();
                     break;
                 case EGameState.Replay:
                     replay.StartReplay();

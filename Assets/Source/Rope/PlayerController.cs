@@ -1,3 +1,4 @@
+using Source.GameState;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,14 +23,17 @@ namespace Source.Rope
 
         void FixedUpdate()
         {
-            _rigidbody.linearVelocity = transform.forward * linearSpeed;
-            ApplyInputTorque(_pitchInput, _yawInput);
+            if(GameStateManager.Instance.GameplayState.IsPlaying)
+            {
+                _rigidbody.linearVelocity = transform.forward * linearSpeed;
+                ApplyInputTorque(_pitchInput, _yawInput);
+            }
         }
 
         void ApplyInputTorque(float pitch, float yaw)
         {  
             var pitchSign = invertPitch ? -1 : 1;
-            var torque = transform.right * pitch * pitchSign * rotationalForce + transform.forward * yaw * rotationalForce;
+            var torque = transform.right * (pitch * pitchSign * rotationalForce) + transform.forward * (yaw * rotationalForce);
             _rigidbody.AddTorque(torque, ForceMode.Force);    
         }
         

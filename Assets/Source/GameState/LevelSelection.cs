@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
+using Source.Rope;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -31,6 +33,12 @@ namespace Source.GameState
             leftButton.onClick.AddListener(PreviousLevel);
             rightButton.onClick.AddListener(NextLevel);
             startLevelButton.onClick.AddListener(SelectLevel);
+        }
+
+        private void Start()
+        {
+            var player = FindFirstObjectByType<PlayerController>();
+            gameplayCam.Target.TrackingTarget = player.transform;
         }
 
         private void OnDestroy()
