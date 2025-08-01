@@ -7,6 +7,8 @@ namespace Source.GameState
 {
     public class GameplayState : MonoBehaviour
     {
+        public bool IsPlaying { get; private set; } = false;
+        
         [Header("References")]
         [SerializeField] private Slider countDownSlider;
         [SerializeField] private RectTransform ropeSliderRectTransform;
@@ -33,6 +35,8 @@ namespace Source.GameState
                 .SetEase(ropeSliderEase);
             
             yield return new WaitForSeconds(1f);
+            
+            IsPlaying = true;
 
             while (_currentLevelDuration < levelDuration)
             {
@@ -40,6 +44,8 @@ namespace Source.GameState
                 yield return null;
                 _currentLevelDuration += Time.deltaTime;
             }
+            
+            IsPlaying = false;
             
             ropeSliderRectTransform.DOAnchorPos(ropeSliderOffPos, ropeSliderMoveDuration)
                 .SetEase(ropeSliderEase);
