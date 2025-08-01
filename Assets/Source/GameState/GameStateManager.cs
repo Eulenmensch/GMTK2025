@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using Source.Utils;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 
 namespace Source.GameState
 {
@@ -14,6 +11,7 @@ namespace Source.GameState
         [SerializeField] private IntroCinematic introCinematic;
         [SerializeField] private LevelSelection levelSelection;
         [SerializeField] private GameplayState gameplayState;
+        [SerializeField] private Replay replay;
 
         public void TransitionToState(EGameState state)
         {
@@ -34,6 +32,7 @@ namespace Source.GameState
                     gameplayState.StartLevel();
                     break;
                 case EGameState.Replay:
+                    replay.StartReplay();
                     break;
                 case EGameState.ResultWin:
                     break;
@@ -43,15 +42,5 @@ namespace Source.GameState
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        #region CinematicIntro
-
-        public void StartGame()
-        {
-            Debug.Log("StartGameButton Test method called.");
-            TransitionToState(EGameState.CinematicIntro);
-        }
-
-        #endregion
     }
 }
