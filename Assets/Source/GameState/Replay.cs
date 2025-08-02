@@ -8,8 +8,6 @@ namespace Source.GameState
     public class Replay : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private CinemachineCamera gameplayCam;
-        [SerializeField] private CinemachineCamera replayCam;
         [SerializeField] private Material replayMat;
         
         [Header("Settings")]
@@ -30,8 +28,7 @@ namespace Source.GameState
                 ropeRenderer.material = replayMat;
                 ropeRenderer.normalizeV = true;
             }
-            gameplayCam.gameObject.SetActive(false);
-            replayCam.gameObject.SetActive(true);
+            CameraManager.Instance.SwitchCamera(EGameState.Replay);
             yield return new WaitForSeconds(1f);
             
             currentReplayDuration = 0;

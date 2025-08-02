@@ -17,8 +17,6 @@ namespace Source.GameState
         [SerializeField] private Button startLevelButton;
         [SerializeField] private TMP_Text startLevelText;
         [SerializeField] private Button rightButton;
-        [SerializeField] private CinemachineCamera gameplayCam;
-        [SerializeField] private CinemachineCamera levelSelectionCam;
         
         [Header("Transition Settings")]
         [SerializeField] private Vector2 selectionOnPos;
@@ -35,11 +33,7 @@ namespace Source.GameState
             startLevelButton.onClick.AddListener(SelectLevel);
         }
 
-        private void Start()
-        {
-            var player = FindFirstObjectByType<PlayerController>();
-            gameplayCam.Target.TrackingTarget = player.transform;
-        }
+        
 
         private void OnDestroy()
         {
@@ -64,8 +58,7 @@ namespace Source.GameState
 
         private IEnumerator SelectLevelCoroutine()
         {
-            levelSelectionCam.gameObject.SetActive(false);
-            gameplayCam.gameObject.SetActive(true);
+            CameraManager.Instance.SwitchCamera(EGameState.Gameplay);
             selectionRectTransform.DOAnchorPos(selectionOffPos, selectionMoveDuration)
                 .SetEase(selectionEase);
             

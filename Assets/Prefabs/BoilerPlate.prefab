@@ -186,8 +186,6 @@ MonoBehaviour:
   startLevelButton: {fileID: 7081830374299845798}
   startLevelText: {fileID: 1403078718910679687}
   rightButton: {fileID: 4655022844478520366}
-  gameplayCam: {fileID: 614749792017982230}
-  levelSelectionCam: {fileID: 5017098999938758388}
   selectionOnPos: {x: 57, y: 0}
   selectionOffPos: {x: -497, y: 0}
   selectionEase: 27
@@ -1460,7 +1458,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1636,8 +1634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introCinematic: {fileID: 5566091457937183825}
   levelSelection: {fileID: 2202941709867707840}
-  gameplayState: {fileID: 270615681994557914}
   replay: {fileID: 6138996324919555016}
+  <GameplayState>k__BackingField: {fileID: 270615681994557914}
 --- !u!1 &5323150380209484365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,6 +2571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6288806826819765468}
+  - component: {fileID: 1982123791336294058}
   m_Layer: 0
   m_Name: Camera & Lights
   m_TagString: Untagged
@@ -2601,6 +2600,22 @@ Transform:
   - {fileID: 4903413990816063201}
   m_Father: {fileID: 1278578575186258663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1982123791336294058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6329889932478008046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c897b5430e184241bd35de4f5092cf3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelectionCam: {fileID: 5017098999938758388}
+  gameplayCam: {fileID: 614749792017982230}
+  replayCam: {fileID: 5773924674335903155}
+  mainMenuCam: {fileID: 85461299428933170}
 --- !u!1 &6371235178638496477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,8 +3943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b16e0f9dc8249eaa8a70e1895dde8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameplayCam: {fileID: 614749792017982230}
-  replayCam: {fileID: 5773924674335903155}
   replayMat: {fileID: 0}
   replayDuration: 3
 --- !u!1 &8534224287160555277
