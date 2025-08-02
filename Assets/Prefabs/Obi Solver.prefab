@@ -245,57 +245,57 @@ MonoBehaviour:
   elements:
   - particle1: 0
     particle2: 1
-    restLength: 0.090632915
+    restLength: 0.09033942
     constraintForce: 0
     tearResistance: 1
   - particle1: 1
     particle2: 2
-    restLength: 0.090972245
+    restLength: 0.091059744
     constraintForce: 0
     tearResistance: 1
   - particle1: 2
     particle2: 3
-    restLength: 0.091026425
+    restLength: 0.09113002
     constraintForce: 0
     tearResistance: 1
   - particle1: 3
     particle2: 4
-    restLength: 0.09097755
+    restLength: 0.09101802
     constraintForce: 0
     tearResistance: 1
   - particle1: 4
     particle2: 5
-    restLength: 0.090901315
+    restLength: 0.09096277
     constraintForce: 0
     tearResistance: 1
   - particle1: 5
     particle2: 6
-    restLength: 0.09097907
+    restLength: 0.090954125
     constraintForce: 0
     tearResistance: 1
   - particle1: 6
     particle2: 7
-    restLength: 0.090901375
+    restLength: 0.0910961
     constraintForce: 0
     tearResistance: 1
   - particle1: 7
     particle2: 8
-    restLength: 0.09097761
+    restLength: 0.09090215
     constraintForce: 0
     tearResistance: 1
   - particle1: 8
     particle2: 9
-    restLength: 0.091026425
+    restLength: 0.090802565
     constraintForce: 0
     tearResistance: 1
   - particle1: 9
     particle2: 10
-    restLength: 0.09097219
+    restLength: 0.09090947
     constraintForce: 0
     tearResistance: 1
   - particle1: 10
     particle2: 11
-    restLength: 0.09063288
+    restLength: 0.09082561
     constraintForce: 0
     tearResistance: 1
   _aerodynamicsEnabled: 1
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actor: {fileID: 65538029165544849}
   m_Target: {fileID: 0}
-  m_ParticleGroup: {fileID: 2958124597795423294, guid: 00357d77f439e5846bccb164b000da82, type: 2}
+  m_ParticleGroup: {fileID: -3324655754331330622, guid: 00357d77f439e5846bccb164b000da82, type: 2}
   m_AttachmentType: 0
   m_ConstrainOrientation: 0
   m_Projection: 0
