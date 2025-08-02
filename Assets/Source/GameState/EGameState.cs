@@ -7,6 +7,7 @@
         LevelSelect,
         Gameplay,
         Replay,
+        Evaluation,
         ResultWin,
         ResultLose
     }

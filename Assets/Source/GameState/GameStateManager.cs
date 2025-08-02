@@ -14,6 +14,8 @@ namespace Source.GameState
         [SerializeField] private IntroCinematic introCinematic;
         [SerializeField] private LevelSelection levelSelection;
         [SerializeField] private Replay replay;
+        [SerializeField] private KnotEvaluationState evaluationState;
+        
         [field: SerializeField] public GameplayState GameplayState { get; private set; }
 
         public void TransitionToState(EGameState state)
@@ -36,6 +38,9 @@ namespace Source.GameState
                     break;
                 case EGameState.Replay:
                     replay.StartReplay();
+                    break;
+                case EGameState.Evaluation:
+                    evaluationState.StartEvaluation();
                     break;
                 case EGameState.ResultWin:
                     break;

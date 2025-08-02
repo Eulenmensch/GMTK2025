@@ -1,25 +1,28 @@
 ﻿using Obi;
 using Source.GameState;
+using Source.Utils;
 using UnityEngine;
 
 namespace Source.Rope
 {
-	public class RopeController : MonoBehaviour
+	public class RopeController : BaseSingleton<RopeController>
 	{
 		[SerializeField] private float growthSpeed;
 		
 		private ObiRopeCursor _cursor;
-		private ObiRope _rope;
+		public ObiRope Rope { get; private set; }
 
 		void Start () {
 			_cursor = GetComponentInChildren<ObiRopeCursor>();
-			_rope = _cursor.GetComponent<ObiRope>();
+			Rope = _cursor.GetComponent<ObiRope>();
 		}
 
-		void FixedUpdate () {
-			if(GameStateManager.Instance.GameplayState.IsPlaying)
-				_cursor.ChangeLength(growthSpeed * Time.deltaTime);
+		void FixedUpdate()
+		{
+			if (GameStateManager.Instance.GameplayState.IsPlaying)
+			{
+				_cursor.ChangeLength(growthSpeed);
+			}
 		}
-		
 	}
 }

@@ -1,32 +1,37 @@
 using Source.GameState;
+using Source.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Source.Rope
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : BaseSingleton<PlayerController>
     {
         [SerializeField] private float linearSpeed;
         [SerializeField] private float maxAngularVelocity;
         [SerializeField] private float rotationalForce;
         [SerializeField] private bool invertPitch;
         
-        private Rigidbody _rigidbody;
+        public Rigidbody Rigidbody { get; private set; }
         private float _pitchInput;
         private float _yawInput;
         
         void Start()
         {
-            _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.maxAngularVelocity = maxAngularVelocity;
+            Rigidbody = GetComponent<Rigidbody>();
+            Rigidbody.maxAngularVelocity = maxAngularVelocity;
         }
 
         void FixedUpdate()
         {
             if(GameStateManager.Instance.GameplayState.IsPlaying)
             {
-                _rigidbody.linearVelocity = transform.forward * linearSpeed;
+                Rigidbody.linearVelocity = transform.forward * linearSpeed;
                 ApplyInputTorque(_pitchInput, _yawInput);
+            }
+            else
+            {
+                Rigidbody.linearVelocity = Vector3.zero;
             }
         }
 
@@ -34,7 +39,7 @@ namespace Source.Rope
         {  
             var pitchSign = invertPitch ? -1 : 1;
             var torque = transform.right * (pitch * pitchSign * rotationalForce) + transform.forward * (yaw * rotationalForce);
-            _rigidbody.AddTorque(torque, ForceMode.Force);    
+            Rigidbody.AddTorque(torque, ForceMode.Force);    
         }
         
         public void Pitch(InputAction.CallbackContext context)
