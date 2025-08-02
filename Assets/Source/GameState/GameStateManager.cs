@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Sirenix.OdinInspector;
 using Source.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,12 +12,20 @@ namespace Source.GameState
     {
         public EGameState CurrentState { get; private set; } = EGameState.MainMenu;
         
+        [EnumPaging]
+        public EGameState StartState;
+        
         [SerializeField] private IntroCinematic introCinematic;
         [SerializeField] private LevelSelection levelSelection;
         [SerializeField] private Replay replay;
         [SerializeField] private KnotEvaluationState evaluationState;
         
         [field: SerializeField] public GameplayState GameplayState { get; private set; }
+
+        private void Start()
+        {
+            TransitionToState(StartState);
+        }
 
         public void TransitionToState(EGameState state)
         {
