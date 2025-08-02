@@ -7,13 +7,15 @@ namespace Source.GameState
 {
     public class Replay : MonoBehaviour
     {
+        private static readonly int REPLAY_PERCENTAGE_PROP_ID = Shader.PropertyToID("_ReplayPercentage");
+
         [Header("References")]
         [SerializeField] private Material replayMat;
         
         [Header("Settings")]
         [SerializeField] private float replayDuration = 3f;
         
-        private float currentReplayDuration;
+        private float _currentReplayDuration;
         
         public void StartReplay()
         {
@@ -27,17 +29,19 @@ namespace Source.GameState
             {
                 ropeRenderer.material = replayMat;
                 ropeRenderer.normalizeV = true;
+                ropeRenderer.uvAnchor = 1f;
             }
             CameraManager.Instance.SwitchCamera(EGameState.Replay);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(CameraManager.Instance.CameraTransitionDuration);
             
-            currentReplayDuration = 0;
-            while (replayDuration > currentReplayDuration)
+            _currentReplayDuration = 0;
+            while (replayDuration > _currentReplayDuration)
             {
-                // Set shader variable
+                replayMat.SetFloat(REPLAY_PERCENTAGE_PROP_ID, _currentReplayDuration/replayDuration);
                 yield return null;
-                currentReplayDuration += Time.deltaTime;
+                _currentReplayDuration += Time.deltaTime;
             }
+            replayMat.SetFloat(REPLAY_PERCENTAGE_PROP_ID, 1f);
             // go to evaluation
         }
     }

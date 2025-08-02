@@ -34,7 +34,7 @@ namespace Source.GameState
             ropeSliderRectTransform.DOAnchorPos(ropeSliderOnPos, ropeSliderMoveDuration)
                 .SetEase(ropeSliderEase);
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(CameraManager.Instance.CameraTransitionDuration);
             
             IsPlaying = true;
 
@@ -50,8 +50,6 @@ namespace Source.GameState
             
             ropeSliderRectTransform.DOAnchorPos(ropeSliderOffPos, ropeSliderMoveDuration)
                 .SetEase(ropeSliderEase);
-            
-            yield return new WaitForSeconds(1f);
             
             GameStateManager.Instance.TransitionToState(EGameState.Replay);
         }

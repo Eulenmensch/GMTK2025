@@ -9,6 +9,8 @@ namespace Source.GameState
 {
     public class CameraManager : BaseSingleton<CameraManager>
     {
+        public float CameraTransitionDuration { get; private set; }
+        
         [SerializeField] private CinemachineCamera levelSelectionCam;
         [SerializeField] private CinemachineCamera gameplayCam;
         [SerializeField] private CinemachineCamera replayCam;
@@ -19,6 +21,8 @@ namespace Source.GameState
         protected override void Awake()
         {
             base.Awake();
+            var cinemachineBrain = FindFirstObjectByType<CinemachineBrain>();
+            CameraTransitionDuration = cinemachineBrain != null ? cinemachineBrain.DefaultBlend.BlendTime : 2f;
             _currentCamera = mainMenuCam;
         }
         
