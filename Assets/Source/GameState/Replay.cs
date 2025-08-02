@@ -42,7 +42,7 @@ namespace Source.GameState
                 _currentReplayDuration += Time.deltaTime;
             }
             replayMat.SetFloat(REPLAY_PERCENTAGE_PROP_ID, 1f);
-            // go to evaluation
+            GameStateManager.Instance.TransitionToState(EGameState.Evaluation);
         }
     }
 }

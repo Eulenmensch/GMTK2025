@@ -15,7 +15,8 @@ namespace Source.GameState
         [SerializeField] private CinemachineCamera gameplayCam;
         [SerializeField] private CinemachineCamera replayCam;
         [SerializeField] private CinemachineCamera mainMenuCam;
-
+        [SerializeField] private CinemachineCamera evaluationCam;
+        
         private CinemachineCamera _currentCamera;
 
         protected override void Awake()
@@ -50,6 +51,9 @@ namespace Source.GameState
                     break;
                 case EGameState.Replay:
                     newCamera = replayCam;
+                    break;
+                case EGameState.Evaluation:
+                    newCamera = evaluationCam;
                     break;
                 case EGameState.CinematicIntro:
                 case EGameState.ResultWin:
