@@ -3943,7 +3943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b16e0f9dc8249eaa8a70e1895dde8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  replayMat: {fileID: 0}
+  replayMat: {fileID: 2100000, guid: a0704dd005721a84182bdec33f256bb8, type: 2}
   replayDuration: 3
 --- !u!1 &8534224287160555277
 GameObject:
