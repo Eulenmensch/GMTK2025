@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using Source.Rope;
+using Source.Utils;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -12,29 +13,21 @@ namespace Source.GameState
     public class LevelSelection : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private RectTransform selectionRectTransform;
         [SerializeField] private Button leftButton;
         [SerializeField] private Button startLevelButton;
         [SerializeField] private TMP_Text startLevelText;
         [SerializeField] private Button rightButton;
         
-        [Header("Transition Settings")]
-        [SerializeField] private Vector2 selectionOnPos;
-        [SerializeField] private Vector2 selectionOffPos;
-        [SerializeField] private Ease selectionEase;
-        [SerializeField] private float selectionMoveDuration = 0.5f;
+        [Header("Animation")]
+        [SerializeField] private SlideInOutTweenData logBookAnimData;
         
         private int _selectedLevelIndex;
 
         private void Awake()
         {
-            leftButton.onClick.AddListener(PreviousLevel);
-            rightButton.onClick.AddListener(NextLevel);
             startLevelButton.onClick.AddListener(SelectLevel);
         }
-
         
-
         private void OnDestroy()
         {
             leftButton.onClick.RemoveListener(PreviousLevel);
@@ -46,9 +39,8 @@ namespace Source.GameState
         {
             _selectedLevelIndex = 1;
             startLevelText.text = _selectedLevelIndex.ToString();
-            
-            selectionRectTransform.DOAnchorPos(selectionOnPos, selectionMoveDuration)
-                .SetEase(selectionEase);
+
+            logBookAnimData.SlideInTween().Play();
         }
 
         private void SelectLevel()
@@ -59,10 +51,9 @@ namespace Source.GameState
         private IEnumerator SelectLevelCoroutine()
         {
             CameraManager.Instance.SwitchCamera(EGameState.Gameplay);
-            selectionRectTransform.DOAnchorPos(selectionOffPos, selectionMoveDuration)
-                .SetEase(selectionEase);
+            logBookAnimData.SlideOutTween().Play();
             
-            yield return new WaitForSeconds(selectionMoveDuration);
+            yield return new WaitForSeconds(logBookAnimData.MoveDuration);
             GameStateManager.Instance.TransitionToState(EGameState.Gameplay);
         }
         

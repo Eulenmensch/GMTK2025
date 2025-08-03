@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Source.GameState;
+using Source.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,74 +13,104 @@ public class IntroCinematic : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayableDirector director;
     [SerializeField] private TMP_Text tutorialTMP;
-    [SerializeField] private RectTransform tutorialPanel;
-    [SerializeField] private RectTransform characterRectTransform;
     
     [Header("Tutorial Text Settings")]
     [SerializeField] private List<string> tutorialLines = new List<string>();
-    [SerializeField] private Vector2 tutorialPanelOnPos;
-    [SerializeField] private Vector2 tutorialPanelOffPos;
-    [SerializeField] private Ease tutorialPanelEase;
-    [SerializeField] private float tutorialPanelMoveDuration = 0.5f;
+    [SerializeField] private SlideInOutTweenData tutorialAnimData;
+    [SerializeField] private float waitTime = 1f;
     
     [Header("Character Sprite Settings")]
-    [SerializeField] private Vector2 characterOnPos;
-    [SerializeField] private Vector2 characterOffPos;
-    [SerializeField] private Ease characterEase;
-    [SerializeField] private float characterMoveDuration = 0.5f;
+    [SerializeField] private int hankSpawnLineIndex = 1;
+    [SerializeField] private SlideInOutTweenData hankAnimData;
     
-    private Coroutine introCinematicRoutine;
-    private bool isPlaying;
+    [Header("Title Settings")]
+    [SerializeField] private SlideInOutTweenData titleAnimData;
+    
+    [Header("Knot Image Settings")]
+    [SerializeField] private int knotSpawnLineIndex = 2;
+    [SerializeField] private SlideInOutTweenData knotAnimData;
+    
+    [Header("WASD Image Settings")]
+    [SerializeField] private int wasdSpawnLineIndex = 3;
+    [SerializeField] private SlideInOutTweenData wasdAnimData;
+    
+    private Coroutine _introCinematicRoutine;
+    private bool _isPlaying;
+    private Sequence _introSequence;
 
     public void PlayIntroCinematic()
     {
-        introCinematicRoutine = StartCoroutine(PlayIntroCinematicRoutine());
+        _introCinematicRoutine = StartCoroutine(PlayIntroCinematicRoutine());
     }
     
     private IEnumerator PlayIntroCinematicRoutine()
     {
-        isPlaying = true;
+        if (_isPlaying)
+            yield break;
         
-        tutorialPanel.DOAnchorPos(tutorialPanelOnPos, tutorialPanelMoveDuration)
-            .SetEase(tutorialPanelEase);
-        characterRectTransform.DOAnchorPos(characterOnPos, characterMoveDuration)
-            .SetEase(characterEase);
+        Debug.Log("Playing intro cinematic");
+        _isPlaying = true;
+
+        titleAnimData.SlideOutTween().Play();
+        tutorialAnimData.SlideInTween().Play();
         
         int totalLineCharacterCount = 0;
         foreach (string line in tutorialLines)
             totalLineCharacterCount += line.Length;
         float averageCharDuration = (float)(director.duration / totalLineCharacterCount);
-
-        Sequence sequence = DOTween.Sequence();
-        foreach (string line in tutorialLines)
+        
+        _introSequence = DOTween.Sequence();
+        for (var index = 0; index < tutorialLines.Count; index++)
         {
-            float duration = averageCharDuration * line.Length;
-            
-            sequence.AppendCallback(() => tutorialTMP.text = "");
-            
-            sequence.Append(tutorialTMP
+            string line = tutorialLines[index];
+            float duration = averageCharDuration * line.Length - waitTime;
+
+            _introSequence.AppendCallback(() => tutorialTMP.text = "");
+
+            if (index == hankSpawnLineIndex) 
+                _introSequence.Insert(_introSequence.Duration(), hankAnimData.SlideInTween());
+
+            if (index == knotSpawnLineIndex) 
+                _introSequence.Insert(_introSequence.Duration(), knotAnimData.SlideInTween());
+
+            if (index == wasdSpawnLineIndex)
+            {
+                _introSequence.Insert(_introSequence.Duration(), wasdAnimData.SlideInTween());
+            }
+
+            _introSequence.Append(tutorialTMP
                 .DOText(line, duration)
                 .SetEase(Ease.Linear)
                 .SetRelative());
+
+            _introSequence.AppendInterval(waitTime);
         }
-        
+
         director.Play();
+        
         while (director.state == PlayState.Playing)
             yield return null;
         
-        tutorialPanel.DOAnchorPos(tutorialPanelOffPos, tutorialPanelMoveDuration)
-            .SetEase(tutorialPanelEase);
+        LeaveIntroCinematic();
+    }
 
-        characterRectTransform.DOAnchorPos(characterOffPos, characterMoveDuration)
-            .SetEase(characterEase);
+    private void LeaveIntroCinematic()
+    {
+        _introSequence.Kill();
+        tutorialAnimData.SlideOutTween().Play();
+        hankAnimData.SlideOutTween().Play();
+        knotAnimData.SlideOutTween().Play();
+        wasdAnimData.SlideOutTween().Play();
         
+        _isPlaying = false;
         GameStateManager.Instance.TransitionToState(EGameState.LevelSelect);
-        isPlaying = false;
     }
 
     private void Update()
     {
-        if (Keyboard.current.bKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame 
+            || Keyboard.current.spaceKey.wasPressedThisFrame 
+            || Keyboard.current.enterKey.wasPressedThisFrame)
         {
             SkipTutorial();
         }
@@ -87,21 +118,15 @@ public class IntroCinematic : MonoBehaviour
     
     private void SkipTutorial()
     {
-        if (director == null || director.playableAsset == null || !isPlaying)
+        if (director == null || director.playableAsset == null || !_isPlaying)
             return;
         
-        StopCoroutine(introCinematicRoutine);
+        StopCoroutine(_introCinematicRoutine);
         
         director.time = director.duration;
         director.Evaluate();
         director.Stop();
         
-        tutorialPanel.DOAnchorPos(tutorialPanelOffPos, tutorialPanelMoveDuration)
-            .SetEase(tutorialPanelEase);
-        characterRectTransform.DOAnchorPos(characterOffPos, characterMoveDuration)
-            .SetEase(characterEase);
-        
-        GameStateManager.Instance.TransitionToState(EGameState.LevelSelect);
-        isPlaying = false;
+        LeaveIntroCinematic();
     }
 }

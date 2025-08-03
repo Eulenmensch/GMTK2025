@@ -64,6 +64,7 @@ namespace Source.GameState
             newCamera.gameObject.SetActive(true);
             _currentCamera.gameObject.SetActive(false);
             _currentCamera = newCamera;
+            Debug.Log($"Transitioning to {newCamera.gameObject.name}");
         }
     }
 }

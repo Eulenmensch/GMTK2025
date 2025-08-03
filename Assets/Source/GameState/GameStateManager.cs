@@ -5,6 +5,7 @@ using Source.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 namespace Source.GameState
 {
@@ -24,6 +25,9 @@ namespace Source.GameState
 
         private void Start()
         {
+#if !UNITY_EDITOR
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+#endif
             TransitionToState(StartState);
         }
 
