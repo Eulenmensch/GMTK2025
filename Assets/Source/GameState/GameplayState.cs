@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using DG.Tweening;
+using Source.Rope;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ namespace Source.GameState
             yield return new WaitForSeconds(CameraManager.Instance.CameraTransitionDuration);
             
             IsPlaying = true;
-
+            var rope = RopeController.Instance.Rope;
             _currentLevelDuration = 0;
             while (_currentLevelDuration < levelDuration)
             {
